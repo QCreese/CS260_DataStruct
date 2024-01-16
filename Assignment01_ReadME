@@ -1,0 +1,111 @@
+1. Some way to represent a bag of marbles: 
+class MarbleBag {
+private:
+    std::vector<std::string> marbles;
+
+public:
+    // Function to add a marble to the bag
+    void addMarble(const std::string& color) {
+        marbles.push_back(color);
+    }
+
+    // Function to draw a random marble from the bag
+    std::string drawMarble() {
+        if (marbles.empty()) {
+            return "The bag is empty!";
+        }
+
+        // Seed the random number generator with the current time
+        std::srand(static_cast<unsigned int>(std::time(0)));
+
+        // Generate a random index within the range of marbles vector
+        int randomIndex = rand() % marbles.size();
+
+        // Retrieve the marble at the random index
+        std::string drawnMarble = marbles[randomIndex];
+
+        // Remove the drawn marble from the bag
+        marbles.erase(marbles.begin() + randomIndex);
+
+        return drawnMarble;
+    }
+I'm using a class to represent the bag of marbles because I needed to alter the class based on the user's choice.
+
+2. a way to add new marbles into the bag:
+I do this in two places. Once in the class above
+class MarbleBag {
+private:
+    std::vector<std::string> marbles;
+
+public:
+    // Function to add a marble to the bag
+    void addMarble(const std::string& color) {
+        marbles.push_back(color);
+    }
+Here I am add the marbles to the bag by color. I also have to add the marbles to the bag within my switch case statement.
+       switch (choice) {
+            case 1: {
+                std::string color;
+                std::cout << "Enter the color of the marble: ";
+                std::cin >> color;
+                bag.addMarble(color);
+                std::cout << "Marble added to the bag.\n";
+                break;
+            }
+
+3. a way to remove a marble out of the bag:
+I used a random element to take marbles out of the bag this can be seen in my class
+std::string drawMarble() {
+        if (marbles.empty()) {
+            return "The bag is empty!";
+        }
+
+        // Seed the random number generator with the current time
+        std::srand(static_cast<unsigned int>(std::time(0)));
+
+        // Generate a random index within the range of marbles vector
+        int randomIndex = rand() % marbles.size();
+
+        // Retrieve the marble at the random index
+        std::string drawnMarble = marbles[randomIndex];
+
+        // Remove the drawn marble from the bag
+        marbles.erase(marbles.begin() + randomIndex);
+
+        return drawnMarble;
+    }
+This allows me to check if the bag is empty and makes the program a bit more fun for the user.
+
+4. a few ways that we could test that the code is working
+I can show this in my marble class and within my switch choice statemtent.
+    // Function to draw a random marble from the bag
+    std::string drawMarble() {
+        if (marbles.empty()) {
+            return "The bag is empty!";
+        }
+when the marbles are drawn if the bag is empty the the program will tell the user that the bag is empty.
+        switch (choice) {
+            case 1: {
+                std::string color;
+                std::cout << "Enter the color of the marble: ";
+                std::cin >> color;
+                bag.addMarble(color);
+                std::cout << "Marble added to the bag.\n";
+                break;
+            }
+            case 2: {
+                std::string drawnMarble = bag.drawMarble();
+                std::cout << "Drawn marble: " << drawnMarble << std::endl;
+                break;
+            }
+            case 3:
+                bag.displayMarbles();
+                break;
+            case 4:
+                std::cout << "Exiting the program.\n";
+                break;
+            default:
+                std::cout << "Invalid choice. Please enter a number between 1 and 4.\n";
+        }
+the default case is assuming that the user input something other that 1-4 if the user does input something
+different then the default case will catch it!
